@@ -1,26 +1,32 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="wrapper">
+    <router-view v-slot="{ Component }">
+      <transition>
+        <component :is="Component" />
+      </transition>
+    </router-view>
+    <Tabbar route placeholder v-show="showFooter">
+      <TabbarItem replace to="/" icon="home-o">Home</TabbarItem>
+      <TabbarItem replace to="/about" icon="search">About</TabbarItem>
+      <TabbarItem replace to="/todoList" icon="friends-o">ToDo</TabbarItem>
+      <TabbarItem replace to="/luckdraw" icon="setting-o">LuckDraw</TabbarItem>
+    </Tabbar>
+  </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { Tabbar, TabbarItem } from "vant";
+export default defineComponent({
   name: 'App',
   components: {
-    HelloWorld
+    Tabbar,
+    TabbarItem
+  },
+  computed: {
+    showFooter() {
+      return this.$route.path.split("/").length < 3
+    }
   }
-}
+})
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

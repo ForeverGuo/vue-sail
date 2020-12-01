@@ -1,0 +1,5 @@
+{
+    "name": "about",
+    "description": "about",
+    "main": "./About.vue"
+}
