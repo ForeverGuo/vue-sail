@@ -1,5 +1,4 @@
 # vue-sail
-//https://github.com/vincentzyc/vue3-demo/blob/master/src/components/city-picker/city.json
 ## Project setup
 ```
 npm install
