@@ -1,0 +1,5 @@
+{
+    "name": "luckdraw",
+    "description": "luckdraw",
+    "main": "./LuckDraw.vue"
+}

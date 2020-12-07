@@ -5,7 +5,7 @@ export const useRect = (element: Element | Ref<Element>) => {
 };
 
 export const useHeight = (element: Element | Ref<Element>) => {
-    const height = ref();
+    let height = ref();
 
     height.value = useRect(element)?.height || 0;
 

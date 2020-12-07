@@ -31,6 +31,25 @@ import dayjs from 'dayjs';
 import { Button, Dialog, Toast } from 'vant';
 import { defineComponent, reactive, onMounted, onBeforeUnmount } from 'vue';
 import HelloWorld from "@/components/HelloWorld.vue";
+interface Task {
+    name: String,
+    run(arg: any):void;
+}
+class MyTask implements Task {
+    name: String;
+    constructor(name: String) {
+        this.name = name;
+    }
+    run(arg:any):void {
+        console.log(`running: ${this.name}, arg: ${arg}`)
+        console.log(this)
+    }
+}
+
+let myTask: Task = new MyTask('someTask');
+
+myTask.run('test');
+
 export default defineComponent({
     props: {
 
