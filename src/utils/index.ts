@@ -47,3 +47,47 @@ export function getUrlParam(name: string = ''): UrlParamBack {
     if (name) return obj[name]
     return obj
   }
+
+
+  Function.prototype.call = function (context: any) {
+    context = context || window; 
+    let args = [];
+    context.fn = this;
+    for(let i=1, len=arguments.length; i<len; i++) {
+        args.push(arguments[i]);
+    };
+
+    const result = context.fn(...args);
+    return result;
+  }
+
+  Function.prototype.apply = function(context: any, arr: any) {
+    context = context || window;
+    context.fn = this;
+    let result;
+    if(!arr) {
+        result = context.fn();
+    } else {
+        if(!(arr instanceof Array)) throw new Error('params must be array');
+        result = context.fn(...arr);
+    }
+
+    delete context.fn;
+    return result;
+  }
+
+  Function.prototype.bind = function(context) {
+    if(typeof this !== 'function') { throw new TypeError('what is trying to be bound is not callback') };
+    let args = Array.prototype.slice.call(arguments, 1);
+    let fn = this,
+        _fn = function(){};
+    let bound = function() {
+        let params = Array.prototype.slice.call(arguments);
+        fn.apply(this.constructor === fn ? this : context, args.concat(params));
+    }
+
+    _fn.prototype = fn.prototype;
+    bound.prototype = new _fn();
+
+    return bound;
+  }
