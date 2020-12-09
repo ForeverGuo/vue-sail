@@ -230,6 +230,47 @@ function compiler(input) {
     return output;
 }
 
+function fun(a) {
+    let args = [], sum = a || 0;
+    let str = /^[A-Za-z]*$/;
+    if(a) {
+        if(str.test(a)) {
+            sum = +a.charCodeAt();
+            a = -1;
+        }
+        if(typeof(a) === 'string') {
+            sum = +a;
+            a = -1;
+        }
+        if(typeof(a) === 'object') {
+            args.concat(Object.values(a));
+            a = -1;
+        }
+        if(Array.isArray(a)) {
+            args.concat(a);
+            a = -1;
+        }
+    }
+
+    return function(b) {
+        console.log(b);
+        if(arguments.length) {
+            args = args.concat([].slice.call(arguments));
+            console.log(args);
+            return arguments.callee
+        } else {
+            let temp = 0;
+            args.forEach((item) => {
+                if(Array.isArray(item)) {
+                    temp = item.reduce((pre, curr) => pre + curr, 0);
+                }
+                sum += temp;
+            }) 
+            return sum;
+        }
+    }
+}
+
 export {
     tokenizer,
     parser, 
